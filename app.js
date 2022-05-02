@@ -2,6 +2,32 @@ const express = require('express')
 const path = require('path')
 const app = new express()
 const ejs = require('ejs') 
+const mongoose = require('mongoose'); 
+
+mongoose.connect('mongodb://localhost/node', {useNewUrlParser: true});
+
+//Get the default connection
+var db = mongoose.connection;
+
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const Schema = mongoose.Schema;
+const BlogPostSchema = new Schema({ 
+    title: String,
+    body: String
+});
+
+const BlogPost = mongoose.model('BlogPost',BlogPostSchema); 
+module.exports = BlogPost
+BlogPost.create({
+    title: 'The Mythbuster’s Guide to Saving Money on Energy Bills',
+    body: 'If you have been here a long time, you might remember when I went on ITV Tonight todispense a masterclass in saving money on energy bills. Energy-saving is one of my favourite money topics...'
+    }, (error, blogpost) =>{
+    console.log(error, blogpost) })
+    
+
 
 app.set('view engine','ejs')
 
