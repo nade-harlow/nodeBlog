@@ -56,9 +56,10 @@ app.get('/contact', function(req, res){
     res.render('contact')
 })
 
-app.get('/post',(req,res)=>{ 
+app.get('/post/:id', async(req,res)=>{ 
     // res.sendFile(path.resolve(__dirname,'pages/post.html'))
-    res.render('post')
+    const blogpost = await BlogPost.findById(req.params.id)
+    res.render('post', {blogpost})
 })
 
 app.get('/post/new', (req,res)=>{ 
