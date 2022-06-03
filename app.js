@@ -40,9 +40,10 @@ app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
 
-app.get('/', function(req, res){
-    // res.sendFile(path.resolve(__dirname, 'pages/index.html'))
-    res.render('index')
+app.get('/', async(req,res)=>{
+    const blogposts = await BlogPost.find()
+    console.log(blogposts)
+    res.render('index',{blogposts})
 })
 
 app.get('/about', function(req, res){
